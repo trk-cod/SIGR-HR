@@ -1,0 +1,376 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------------------------------------------
+// MÓDULO I - SEGURIDAD
+// ------------------------------------------------------------
+
+model Usuario {
+  id_usuario         Int       @id @default(autoincrement())
+  nombre_usuario     String    @unique @db.VarChar(50)
+  contrasena_usuario String    @db.VarChar(255) // guardar siempre encriptada (bcrypt)
+  id_rol             Int
+  ultimo_acceso      DateTime?
+  estado             Boolean   @default(true)
+
+  rol       Rol        @relation(fields: [id_rol], references: [id_rol])
+  bitacoras Bitacora[]
+
+  @@map("usuario")
+}
+
+model Rol {
+  id_rol      Int     @id @default(autoincrement())
+  nombre_rol  String  @db.VarChar(50)
+  descripcion String? @db.VarChar(200)
+  estado      Boolean @default(true)
+
+  usuarios Usuario[]
+  permisos RolPermiso[]
+
+  @@map("rol")
+}
+
+model Permiso {
+  id_permiso      Int     @id @default(autoincrement())
+  nombre_permiso  String  @db.VarChar(100)
+  descripcion     String? @db.VarChar(200)
+
+  roles RolPermiso[]
+
+  @@map("permiso")
+}
+
+model RolPermiso {
+  id_rol_permiso Int @id @default(autoincrement())
+  id_rol         Int
+  id_permiso     Int
+
+  rol     Rol     @relation(fields: [id_rol], references: [id_rol])
+  permiso Permiso @relation(fields: [id_permiso], references: [id_permiso])
+
+  @@unique([id_rol, id_permiso])
+  @@map("rol_permiso")
+}
+
+model Bitacora {
+  id_bitacora    Int      @id @default(autoincrement())
+  id_usuario     Int
+  accion         String   @db.VarChar(100) // INSERT, UPDATE, DELETE
+  tabla_afectada String   @db.VarChar(100)
+  registro_id    Int?
+  descripcion    String?  @db.VarChar(300)
+  fecha_hora     DateTime @default(now())
+  ip_equipo      String?  @db.VarChar(45)
+
+  usuario Usuario @relation(fields: [id_usuario], references: [id_usuario])
+
+  @@map("bitacora")
+}
+
+// ------------------------------------------------------------
+// MÓDULO II - PERSONAL
+// ------------------------------------------------------------
+
+model Cargo {
+  id_cargo     Int     @id @default(autoincrement())
+  nombre_car   String  @db.VarChar(100)
+  descripcion  String? @db.VarChar(200)
+  sueldo_base  Decimal @db.Decimal(10, 2)
+  estado       Boolean @default(true)
+
+  empleados Empleado[]
+
+  @@map("cargo")
+}
+
+model Empleado {
+  id_empleado    Int      @id @default(autoincrement())
+  nombre_em      String   @db.VarChar(100)
+  apellido_em    String   @db.VarChar(100)
+  cedula_em      String   @unique @db.VarChar(20)
+  fecha_nac_emp  DateTime @db.Date
+  sexo           Boolean? // true = femenino, false = masculino
+  telefono_em    String?  @db.VarChar(20)
+  correo_em      String?  @unique @db.VarChar(100)
+  direccion_em   String?  @db.VarChar(100)
+  id_cargo       Int
+  fecha_ingreso  DateTime @db.Date
+  salario_actual Decimal  @db.Decimal(10, 2)
+  estado         Boolean  @default(true)
+
+  cargo                Cargo                 @relation(fields: [id_cargo], references: [id_cargo])
+  reservas             Reserva[]
+  check_ins            CheckIn[]
+  check_outs           CheckOut[]
+  facturas             Factura[]
+  historial_habitacion HistorialHabitacion[]
+  mantenimientos       Mantenimiento[]
+
+  @@map("empleado")
+}
+
+// ------------------------------------------------------------
+// MÓDULO III - CLIENTES
+// ------------------------------------------------------------
+
+model Huesped {
+  id_huesped        Int      @id @default(autoincrement())
+  nombre_hu         String   @db.VarChar(100)
+  apellido_hu       String   @db.VarChar(100)
+  identificacion_hu String   @unique @db.VarChar(30) // cédula o pasaporte
+  telefono_hu       String?  @db.VarChar(20)
+  correo_hu         String?  @unique @db.VarChar(100)
+  direccion_hu      String?  @db.VarChar(200)
+  nacionalidad_hu   String?  @db.VarChar(50)
+  fecha_ingreso     DateTime @default(now()) @db.Date
+  estado            Boolean  @default(true)
+
+  reservas Reserva[]
+
+  @@map("huesped")
+}
+
+// ------------------------------------------------------------
+// MÓDULO IV - HABITACIONES
+// ------------------------------------------------------------
+
+model EstadoHabitacion {
+  id_est_habitacion Int     @id @default(autoincrement())
+  nombre_estado     String  @db.VarChar(30) // Disponible, Ocupada, Limpieza, Mantenimiento
+  descripcion       String? @db.VarChar(200)
+
+  habitaciones Habitacion[]
+  historial    HistorialHabitacion[]
+
+  @@map("estado_habitacion")
+}
+
+model TipoHabitacion {
+  id_thabitacion  Int     @id @default(autoincrement())
+  nombre_tipo     String  @db.VarChar(50)
+  descripcion     String? @db.VarChar(200)
+  capacidad       Int
+  cantidad_camas  Int
+  estado          Boolean @default(true)
+
+  habitaciones     Habitacion[]
+  tarifas          Tarifa[]
+  detalle_facturas DetalleFactura[]
+
+  @@map("tipo_habitacion")
+}
+
+model Habitacion {
+  id_habitacion      Int      @id @default(autoincrement())
+  numero_habitacion  String   @unique @db.VarChar(10)
+  piso               Int
+  id_tipo            Int
+  id_est_habitacion  Int
+  descripcion        String?  @db.VarChar(200)
+  fecha_ingreso      DateTime @default(now()) @db.Date
+
+  tipo            TipoHabitacion        @relation(fields: [id_tipo], references: [id_thabitacion])
+  estado_actual   EstadoHabitacion      @relation(fields: [id_est_habitacion], references: [id_est_habitacion])
+  detalle_reservas DetalleReserva[]
+  historial       HistorialHabitacion[]
+  mantenimientos  Mantenimiento[]
+
+  @@map("habitacion")
+}
+
+model Tarifa {
+  id_tarifa         Int      @id @default(autoincrement())
+  id_thabitacion    Int
+  nombre_temporada  String   @db.VarChar(50)
+  descripcion       String?  @db.VarChar(250)
+  fecha_inicio      DateTime @db.Date
+  fecha_fin         DateTime @db.Date
+  precio_noche      Decimal  @db.Decimal(10, 2)
+  estado            Boolean  @default(true)
+
+  tipo_habitacion TipoHabitacion @relation(fields: [id_thabitacion], references: [id_thabitacion])
+
+  @@map("tarifa")
+}
+
+model HistorialHabitacion {
+  id_historial       Int       @id @default(autoincrement())
+  id_habitacion      Int
+  id_est_habitacion  Int
+  fecha_inicio       DateTime  @default(now())
+  fecha_fin          DateTime?
+  observaciones      String?   @db.VarChar(300)
+  id_empleado        Int
+
+  habitacion Habitacion       @relation(fields: [id_habitacion], references: [id_habitacion])
+  estado     EstadoHabitacion @relation(fields: [id_est_habitacion], references: [id_est_habitacion])
+  empleado   Empleado         @relation(fields: [id_empleado], references: [id_empleado])
+
+  @@map("historial_habitacion")
+}
+
+model Mantenimiento {
+  id_mantenimiento    Int       @id @default(autoincrement())
+  id_habitacion       Int
+  id_empleado         Int
+  tipo_mantenimiento  String    @db.VarChar(30) // preventivo, correctivo, urgente
+  fecha_inicio        DateTime  @default(now())
+  fecha_fin           DateTime?
+  descripcion         String    @db.VarChar(300)
+  costo               Decimal?  @db.Decimal(10, 2)
+  estado              String    @db.VarChar(50) // Pendiente / Completado
+
+  habitacion Habitacion @relation(fields: [id_habitacion], references: [id_habitacion])
+  empleado   Empleado   @relation(fields: [id_empleado], references: [id_empleado])
+
+  @@map("mantenimiento")
+}
+
+// ------------------------------------------------------------
+// MÓDULO V - RESERVAS
+// ------------------------------------------------------------
+
+model EstadoReserva {
+  id_est_reserva  Int     @id @default(autoincrement())
+  nombre_est_res  String  @db.VarChar(30) // Pendiente, Confirmada, Cancelada, Finalizada
+  descripcion     String? @db.VarChar(200)
+
+  reservas Reserva[]
+
+  @@map("estado_reserva")
+}
+
+model Reserva {
+  id_reserva         Int      @id @default(autoincrement())
+  fecha_reserva      DateTime @default(now())
+  fecha_entrada      DateTime @db.Date
+  fecha_salida       DateTime @db.Date
+  cantidad_personas  Int
+  observaciones      String?  @db.VarChar(300)
+  id_huesped         Int
+  id_empleado        Int
+  id_est_reserva     Int
+
+  huesped        Huesped        @relation(fields: [id_huesped], references: [id_huesped])
+  empleado       Empleado       @relation(fields: [id_empleado], references: [id_empleado])
+  estado_reserva EstadoReserva  @relation(fields: [id_est_reserva], references: [id_est_reserva])
+  detalles       DetalleReserva[]
+  check_ins      CheckIn[]
+  check_outs     CheckOut[]
+  pagos          Pago[]
+  facturas       Factura[]
+
+  @@map("reserva")
+}
+
+model DetalleReserva {
+  id_detalle_reserva Int @id @default(autoincrement())
+  id_reserva         Int
+  id_habitacion      Int
+
+  reserva    Reserva    @relation(fields: [id_reserva], references: [id_reserva])
+  habitacion Habitacion @relation(fields: [id_habitacion], references: [id_habitacion])
+
+  @@map("detalle_reserva")
+}
+
+model CheckIn {
+  id_checkin          Int      @id @default(autoincrement())
+  fecha_hora_checkin  DateTime @default(now())
+  id_reserva          Int
+  id_empleado         Int
+
+  reserva  Reserva  @relation(fields: [id_reserva], references: [id_reserva])
+  empleado Empleado @relation(fields: [id_empleado], references: [id_empleado])
+
+  @@map("check_in")
+}
+
+model CheckOut {
+  id_checkout          Int      @id @default(autoincrement())
+  fecha_hora_checkout  DateTime @default(now())
+  id_reserva           Int
+  id_empleado          Int
+
+  reserva  Reserva  @relation(fields: [id_reserva], references: [id_reserva])
+  empleado Empleado @relation(fields: [id_empleado], references: [id_empleado])
+
+  @@map("check_out")
+}
+
+// ------------------------------------------------------------
+// MÓDULO VI - PAGOS Y FACTURACIÓN
+// ------------------------------------------------------------
+
+model MetodoPago {
+  id_met_pago     Int     @id @default(autoincrement())
+  nombre_metodo   String  @db.VarChar(50) // Efectivo, Tarjeta Débito, Tarjeta Crédito, Transferencia
+  descripcion     String? @db.VarChar(200)
+
+  pagos Pago[]
+
+  @@map("metodo_pago")
+}
+
+model Pago {
+  id_pago      Int      @id @default(autoincrement())
+  fecha_pago   DateTime @default(now())
+  monto        Decimal  @db.Decimal(10, 2)
+  id_met_pago  Int
+  id_reserva   Int
+  estado       String   @db.VarChar(50) // Pendiente, Completado, Anulado
+
+  metodo_pago MetodoPago @relation(fields: [id_met_pago], references: [id_met_pago])
+  reserva     Reserva    @relation(fields: [id_reserva], references: [id_reserva])
+  facturas    Factura[]
+
+  @@map("pago")
+}
+
+model Factura {
+  id_factura      Int      @id @default(autoincrement())
+  numero_factura  String   @unique @db.VarChar(30)
+  tipo_factura    String   @db.VarChar(30) // Fiscal, Consumidor Final, etc.
+  rcf             String?  @db.VarChar(20) // Registro de Comprobante Fiscal
+  fecha_emision   DateTime @default(now()) @db.Date
+  id_reserva      Int
+  id_pago         Int
+  id_empleado     Int
+  subtotal        Decimal  @db.Decimal(10, 2)
+  itbis           Decimal  @db.Decimal(10, 2)
+  total           Decimal  @db.Decimal(10, 2)
+  estado          String   @db.VarChar(50) // Emitida, Anulada
+
+  reserva  Reserva  @relation(fields: [id_reserva], references: [id_reserva])
+  pago     Pago     @relation(fields: [id_pago], references: [id_pago])
+  empleado Empleado @relation(fields: [id_empleado], references: [id_empleado])
+  detalles DetalleFactura[]
+
+  @@map("factura")
+}
+
+model DetalleFactura {
+  id_detalle_factura     Int     @id @default(autoincrement())
+  id_factura             Int
+  id_thabitacion         Int
+  cantidad_habitaciones  Int
+  cantidad_noches        Int
+  precio_noche           Decimal @db.Decimal(10, 2)
+
+  factura         Factura        @relation(fields: [id_factura], references: [id_factura])
+  tipo_habitacion TipoHabitacion @relation(fields: [id_thabitacion], references: [id_thabitacion])
+
+  @@map("detalle_factura")
+}

@@ -1,0 +1,17 @@
+
+services:
+  db:
+    image: postgres:16
+    container_name: sigr_hr_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sigr_user
+      POSTGRES_PASSWORD: SIGR2026
+      POSTGRES_DB: sigr_hr_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
