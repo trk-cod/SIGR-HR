@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { HuespedService } from './huesped.service.js';
 import { CreateHuespedDto } from './dto/create-huesped.dto.js';
 import { UpdateHuespedDto } from './dto/update-huesped.dto.js';
+import { publicDecrypt } from 'node:crypto';
 
 @ApiTags('huesped')
 @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
@@ -38,7 +40,7 @@ export class HuespedController {
     return this.huespedService.crearHuesped(huesped);
   }
 
-  @Patch(':id')
+  @Put(':id')
   actualizarHuesped(
     @Param('id', ParseIntPipe) id: number,
     @Body() huesped: UpdateHuespedDto,

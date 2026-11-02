@@ -36,6 +36,9 @@ export class HuespedService {
 
   async listarHuespedes(): Promise<Huesped[]> {
     return await this.prismaService.huesped.findMany();
+    //TODO: agregar paginacion,opcional
+    // UUID PARA EL ID DE HUESPED 
+    // CREAR SEED PARA LAS PRUEBAS, O ESA DATOS
   }
 
   async buscarUnHuesped(id_huesped: number): Promise<Huesped> {
