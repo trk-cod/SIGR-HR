@@ -5,32 +5,31 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   Patch,
   Post,
-  Put,
-  UsePipes,
-  ValidationPipe,
+  Query,
 } from '@nestjs/common';
+
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+
 import { HuespedService } from './huesped.service.js';
 import { CreateHuespedDto } from './dto/create-huesped.dto.js';
 import { UpdateHuespedDto } from './dto/update-huesped.dto.js';
-import { publicDecrypt } from 'node:crypto';
+import { ListarHuespedesDto } from './dto/listar-huespedes.dto.js';
 
 @ApiTags('huesped')
-@UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
 @Controller('huesped')
 export class HuespedController {
   constructor(private readonly huespedService: HuespedService) {}
 
   @Get()
-  listarHuespedes() {
-    return this.huespedService.listarHuespedes();
+  listarHuespedes(@Query() query: ListarHuespedesDto) {
+    return this.huespedService.listarHuespedes(query);
   }
 
   @Get(':id')
-  buscarUnHuesped(@Param('id', ParseIntPipe) id: number) {
+  buscarUnHuesped(@Param('id', ParseUUIDPipe) id: string) {
     return this.huespedService.buscarUnHuesped(id);
   }
 
@@ -40,16 +39,16 @@ export class HuespedController {
     return this.huespedService.crearHuesped(huesped);
   }
 
-  @Put(':id')
+  @Patch(':id')
   actualizarHuesped(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() huesped: UpdateHuespedDto,
   ) {
     return this.huespedService.actualizarHuesped(id, huesped);
   }
 
   @Delete(':id')
-  desactivarHuesped(@Param('id', ParseIntPipe) id: number) {
+  desactivarHuesped(@Param('id', ParseUUIDPipe) id: string) {
     return this.huespedService.desactivarHuesped(id);
   }
 }

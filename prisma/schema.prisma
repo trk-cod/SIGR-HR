@@ -32,7 +32,7 @@ model Usuario {
 
 model Rol {
   id_rol      Int     @id @default(autoincrement())
-  nombre_rol  String  @db.VarChar(50)
+  nombre_rol  String  @unique @db.VarChar(50)
   descripcion String? @db.VarChar(200)
   estado      Boolean @default(true)
 
@@ -44,7 +44,7 @@ model Rol {
 
 model Permiso {
   id_permiso      Int     @id @default(autoincrement())
-  nombre_permiso  String  @db.VarChar(100)
+  nombre_permiso  String  @unique @db.VarChar(100)
   descripcion     String? @db.VarChar(200)
 
   roles RolPermiso[]
@@ -69,7 +69,7 @@ model Bitacora {
   id_usuario     Int
   accion         String   @db.VarChar(100) // INSERT, UPDATE, DELETE
   tabla_afectada String   @db.VarChar(100)
-  registro_id    Int?
+  registro_id    String? @db.VarChar(40)
   descripcion    String?  @db.VarChar(300)
   fecha_hora     DateTime @default(now())
   ip_equipo      String?  @db.VarChar(45)
@@ -126,7 +126,7 @@ model Empleado {
 // ------------------------------------------------------------
 
 model Huesped {
-  id_huesped        Int      @id @default(autoincrement())
+  id_huesped        String      @id @default(uuid()) @db.Uuid
   nombre_hu         String   @db.VarChar(100)
   apellido_hu       String   @db.VarChar(100)
   identificacion_hu String   @unique @db.VarChar(30) // cédula o pasaporte
@@ -259,7 +259,7 @@ model Reserva {
   fecha_salida       DateTime @db.Date
   cantidad_personas  Int
   observaciones      String?  @db.VarChar(300)
-  id_huesped         Int
+  id_huesped         String @db.Uuid
   id_empleado        Int
   id_est_reserva     Int
 
