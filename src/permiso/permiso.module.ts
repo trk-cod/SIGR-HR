@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from '../prisma/prisma.module.js';
+import { PrismaModule } from '../message/prisma/prisma.module.js';
 import { PermisoController } from './permiso.controller.js';
 import { PermisoService } from './permiso.service.js';
 

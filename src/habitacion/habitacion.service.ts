@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
+import { PrismaService } from '../message/prisma/prisma.service.js';
 import type { Prisma } from '../generated/prisma/client.js';
 import { CreateHabitacionDto } from './dto/create-habitacion.dto.js';
 import { UpdateHabitacionDto } from './dto/update-habitacion.dto.js';
@@ -51,9 +51,12 @@ export class HabitacionService {
     }
   }
 
-  async listarHabitaciones(query: ListarHabitacionesDto) {
+    async listarHabitaciones(query: ListarHabitacionesDto) {
     try {
-      const { page, limit, id_tipo, id_est_habitacion } = query;
+      const page = query.page ?? 1;
+      const limit = query.limit ?? 10;
+      const { id_tipo, id_est_habitacion } = query;
+      
       const where: Prisma.HabitacionWhereInput = {
         ...(id_tipo ? { id_tipo } : {}),
         ...(id_est_habitacion ? { id_est_habitacion } : {}),

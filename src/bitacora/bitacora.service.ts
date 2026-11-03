@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
+import { PrismaService } from '../message/prisma/prisma.service.js';
 
 @Injectable()
 export class BitacoraService {

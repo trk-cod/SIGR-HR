@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
+import { PrismaService } from '../message/prisma/prisma.service.js';
 import type { Huesped, Prisma } from '../generated/prisma/client.js';
 import { CreateHuespedDto } from './dto/create-huesped.dto.js';
 import { UpdateHuespedDto } from './dto/update-huesped.dto.js';

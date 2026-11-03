@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
+import { PrismaService } from '../message/prisma/prisma.service.js';
 import { CreateRolDto } from './dto/create-rol.dto.js';
 import { UpdateRolDto } from './dto/update-rol.dto.js';
 import { ROL_DUPLICADO_EXCEPTION, ROL_INVALIDO_EXCEPTION, ROL_EN_USO_EXCEPTION, PERMISO_INVALIDO_EXCEPTION } from '../message/seguridad.message.js';
