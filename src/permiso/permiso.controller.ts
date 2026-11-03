@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Controller, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PermisoService } from './permiso.service.js';
@@ -15,3 +16,9 @@ export class PermisoController {
     return this.permisoService.listarPermisos();
   }
 }
+=======
+import { Controller } from '@nestjs/common';
+
+@Controller('permiso')
+export class PermisoController {}
+>>>>>>> equipo/develop

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> equipo/develop
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { appendFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -16,11 +20,20 @@ export class FileLogger extends ConsoleLogger {
     void this.escribir('WARN', message, optionalParams);
   }
 
+<<<<<<< HEAD
   private async escribir(nivel: string, message: unknown, params: unknown[]) {
+=======
+  private async escribir(
+    nivel: string,
+    message: unknown,
+    params: unknown[],
+  ) {
+>>>>>>> equipo/develop
     try {
       const ahora = new Date();
       const dia = ahora.toISOString().slice(0, 10);
       const detalle = params.map((p) => String(p)).join(' ');
+<<<<<<< HEAD
       const linea = `${ahora.toISOString()} [${nivel}] ${String(message)} ${detalle}\n`;
       await mkdir(this.carpeta, { recursive: true });
       await appendFile(join(this.carpeta, `app-${dia}.log`), linea);
@@ -29,3 +42,19 @@ export class FileLogger extends ConsoleLogger {
     }
   }
 }
+=======
+
+      const linea = `${ahora.toISOString()} [${nivel}] ${String(message)}\n${detalle}\n`;
+
+      await mkdir(this.carpeta, { recursive: true });
+
+      await appendFile(
+        join(this.carpeta, `app-${dia}.log`),
+        linea,
+      );
+    } catch {
+      // El registro de logs nunca debe tumbar la aplicación.
+    }
+  }
+}
+>>>>>>> equipo/develop

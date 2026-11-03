@@ -1,6 +1,18 @@
+<<<<<<< HEAD
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength,
+=======
+
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+>>>>>>> equipo/develop
 } from 'class-validator';
 
 export class CreateHuespedDto {
@@ -16,7 +28,14 @@ export class CreateHuespedDto {
   @MaxLength(100)
   apellido_hu: string;
 
+<<<<<<< HEAD
   @ApiProperty({ example: '001-1234567-8', description: 'Cédula o pasaporte' })
+=======
+  @ApiProperty({
+    example: '001-1234567-8',
+    description: 'Cédula o pasaporte',
+  })
+>>>>>>> equipo/develop
   @IsString()
   @IsNotEmpty()
   @MaxLength(30)
@@ -50,4 +69,8 @@ export class CreateHuespedDto {
   @IsOptional()
   @IsBoolean()
   estado?: boolean;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> equipo/develop

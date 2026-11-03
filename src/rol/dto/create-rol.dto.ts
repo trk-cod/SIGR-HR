@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { IsString, IsNotEmpty, IsArray, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateRolDto {
@@ -13,4 +14,21 @@ export class CreateRolDto {
   @IsNumber({}, { each: true })
   @IsOptional()
   permisosIds?: number[];
+=======
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+
+export class CreateRolDto {
+  @ApiProperty({ example: 'Auditor' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  nombre_rol: string;
+
+  @ApiPropertyOptional({ example: 'Solo consulta' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  descripcion?: string;
+>>>>>>> equipo/develop
 }
