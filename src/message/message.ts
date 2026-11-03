@@ -34,3 +34,4 @@ export const NOT_FOUND_BY_ID_EXCEPTION = (
 
 // Mensajes de cada módulo
 export * from './huesped.message.js';
+export * from './seguridad.message.js';
