@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+
+export class CreateUsuarioDto {
+  @IsString()
+  @IsNotEmpty()
+  nombre_usuario: string;
+
+  @IsString()
+  @IsNotEmpty()
+  contrasena_usuario: string;
+
+  @IsNumber()
+=======
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsInt,
@@ -31,5 +45,6 @@ export class CreateUsuarioDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)
+>>>>>>> equipo/develop
   id_rol: number;
 }

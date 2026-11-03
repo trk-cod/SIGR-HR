@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+import { Test, TestingModule } from '@nestjs/testing';
+import { BitacoraService } from './bitacora.service.js';
+=======
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Logger } from '@nestjs/common';
 import { BitacoraService } from './bitacora.service.js';
@@ -12,10 +16,25 @@ vi.mock('../common/prisma-error.js', () => ({
 vi.mock('../common/paginacion.js', () => ({
   paginar: vi.fn(),
 }));
+>>>>>>> equipo/develop
 
 describe('BitacoraService', () => {
   let service: BitacoraService;
 
+<<<<<<< HEAD
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [BitacoraService],
+    }).compile();
+
+    service = module.get<BitacoraService>(BitacoraService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+=======
   const prismaMock = {
     bitacora: {
       create: vi.fn(),
@@ -270,3 +289,4 @@ describe('BitacoraService', () => {
     });
   });
 });
+>>>>>>> equipo/develop

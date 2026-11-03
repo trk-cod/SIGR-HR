@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+import { Test, TestingModule } from '@nestjs/testing';
+=======
 
 import {
   BadRequestException,
@@ -5,11 +8,24 @@ import {
 } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+>>>>>>> equipo/develop
 import { RolService } from './rol.service.js';
 
 describe('RolService', () => {
   let service: RolService;
 
+<<<<<<< HEAD
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [RolService],
+    }).compile();
+
+    service = module.get<RolService>(RolService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+=======
   const rolMock = {
     id_rol: 1,
     nombre_rol: 'Recepcionista',
@@ -307,5 +323,6 @@ describe('RolService', () => {
       expect(prismaMock.permiso.count).not.toHaveBeenCalled();
       expect(prismaMock.$transaction).not.toHaveBeenCalled();
     });
+>>>>>>> equipo/develop
   });
 });

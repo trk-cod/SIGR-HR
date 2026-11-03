@@ -1,10 +1,29 @@
+<<<<<<< HEAD
+import { Test, TestingModule } from '@nestjs/testing';
+import { BitacoraController } from './bitacora.controller.js';
+=======
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BitacoraController } from './bitacora.controller.js';
 import { BitacoraService } from './bitacora.service.js';
+>>>>>>> equipo/develop
 
 describe('BitacoraController', () => {
   let controller: BitacoraController;
 
+<<<<<<< HEAD
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [BitacoraController],
+    }).compile();
+
+    controller = module.get<BitacoraController>(BitacoraController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
+=======
   const bitacoraServiceMock = {
     listarBitacora: vi.fn(),
   };
@@ -74,3 +93,4 @@ describe('BitacoraController', () => {
     });
   });
 });
+>>>>>>> equipo/develop

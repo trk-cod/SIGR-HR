@@ -1,8 +1,11 @@
+<<<<<<< HEAD
+=======
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
+>>>>>>> equipo/develop
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -12,14 +15,22 @@ datasource db {
   provider = "postgresql"
 }
 
+<<<<<<< HEAD
+// ---------------- MÓDULO I - SEGURIDAD ----------------
+=======
 // ------------------------------------------------------------
 // MÓDULO I - SEGURIDAD
 // ------------------------------------------------------------
+>>>>>>> equipo/develop
 
 model Usuario {
   id_usuario         Int       @id @default(autoincrement())
   nombre_usuario     String    @unique @db.VarChar(50)
+<<<<<<< HEAD
+  contrasena_usuario String    @db.VarChar(255)
+=======
   contrasena_usuario String    @db.VarChar(255) // guardar siempre encriptada (bcrypt)
+>>>>>>> equipo/develop
   id_rol             Int
   ultimo_acceso      DateTime?
   estado             Boolean   @default(true)
@@ -43,9 +54,15 @@ model Rol {
 }
 
 model Permiso {
+<<<<<<< HEAD
+  id_permiso     Int     @id @default(autoincrement())
+  nombre_permiso String  @unique @db.VarChar(100)
+  descripcion    String? @db.VarChar(200)
+=======
   id_permiso      Int     @id @default(autoincrement())
   nombre_permiso  String  @unique @db.VarChar(100)
   descripcion     String? @db.VarChar(200)
+>>>>>>> equipo/develop
 
   roles RolPermiso[]
 
@@ -53,7 +70,12 @@ model Permiso {
 }
 
 model RolPermiso {
+<<<<<<< HEAD
+
+ id_rol_permiso Int @id @default(autoincrement())
+=======
   id_rol_permiso Int @id @default(autoincrement())
+>>>>>>> equipo/develop
   id_rol         Int
   id_permiso     Int
 
@@ -67,9 +89,15 @@ model RolPermiso {
 model Bitacora {
   id_bitacora    Int      @id @default(autoincrement())
   id_usuario     Int
+<<<<<<< HEAD
+  accion         String   @db.VarChar(100)
+  tabla_afectada String   @db.VarChar(100)
+  registro_id    String?  @db.VarChar(40)
+=======
   accion         String   @db.VarChar(100) // INSERT, UPDATE, DELETE
   tabla_afectada String   @db.VarChar(100)
   registro_id    String? @db.VarChar(40)
+>>>>>>> equipo/develop
   descripcion    String?  @db.VarChar(300)
   fecha_hora     DateTime @default(now())
   ip_equipo      String?  @db.VarChar(45)
@@ -79,6 +107,16 @@ model Bitacora {
   @@map("bitacora")
 }
 
+<<<<<<< HEAD
+// ---------------- MÓDULO II - PERSONAL ----------------
+
+model Cargo {
+  id_cargo    Int     @id @default(autoincrement())
+  nombre_car  String  @db.VarChar(100)
+  descripcion String? @db.VarChar(200)
+  sueldo_base Decimal @db.Decimal(10, 2)
+  estado      Boolean @default(true)
+=======
 // ------------------------------------------------------------
 // MÓDULO II - PERSONAL
 // ------------------------------------------------------------
@@ -89,6 +127,7 @@ model Cargo {
   descripcion  String? @db.VarChar(200)
   sueldo_base  Decimal @db.Decimal(10, 2)
   estado       Boolean @default(true)
+>>>>>>> equipo/develop
 
   empleados Empleado[]
 
@@ -101,7 +140,11 @@ model Empleado {
   apellido_em    String   @db.VarChar(100)
   cedula_em      String   @unique @db.VarChar(20)
   fecha_nac_emp  DateTime @db.Date
+<<<<<<< HEAD
+  sexo           Boolean?
+=======
   sexo           Boolean? // true = femenino, false = masculino
+>>>>>>> equipo/develop
   telefono_em    String?  @db.VarChar(20)
   correo_em      String?  @unique @db.VarChar(100)
   direccion_em   String?  @db.VarChar(100)
@@ -121,6 +164,15 @@ model Empleado {
   @@map("empleado")
 }
 
+<<<<<<< HEAD
+// ---------------- MÓDULO III - CLIENTES ----------------
+
+model Huesped {
+  id_huesped        String   @id @default(uuid()) @db.Uuid
+  nombre_hu         String   @db.VarChar(100)
+  apellido_hu       String   @db.VarChar(100)
+  identificacion_hu String   @unique @db.VarChar(30)
+=======
 // ------------------------------------------------------------
 // MÓDULO III - CLIENTES
 // ------------------------------------------------------------
@@ -130,6 +182,7 @@ model Huesped {
   nombre_hu         String   @db.VarChar(100)
   apellido_hu       String   @db.VarChar(100)
   identificacion_hu String   @unique @db.VarChar(30) // cédula o pasaporte
+>>>>>>> equipo/develop
   telefono_hu       String?  @db.VarChar(20)
   correo_hu         String?  @unique @db.VarChar(100)
   direccion_hu      String?  @db.VarChar(200)
@@ -142,6 +195,13 @@ model Huesped {
   @@map("huesped")
 }
 
+<<<<<<< HEAD
+// ---------------- MÓDULO IV - HABITACIONES ----------------
+
+model EstadoHabitacion {
+  id_est_habitacion Int     @id @default(autoincrement())
+  nombre_estado     String  @db.VarChar(30)
+=======
 // ------------------------------------------------------------
 // MÓDULO IV - HABITACIONES
 // ------------------------------------------------------------
@@ -149,6 +209,7 @@ model Huesped {
 model EstadoHabitacion {
   id_est_habitacion Int     @id @default(autoincrement())
   nombre_estado     String  @db.VarChar(30) // Disponible, Ocupada, Limpieza, Mantenimiento
+>>>>>>> equipo/develop
   descripcion       String? @db.VarChar(200)
 
   habitaciones Habitacion[]
@@ -158,12 +219,21 @@ model EstadoHabitacion {
 }
 
 model TipoHabitacion {
+<<<<<<< HEAD
+  id_thabitacion Int     @id @default(autoincrement())
+  nombre_tipo    String  @db.VarChar(50)
+  descripcion    String? @db.VarChar(200)
+  capacidad      Int
+  cantidad_camas Int
+  estado         Boolean @default(true)
+=======
   id_thabitacion  Int     @id @default(autoincrement())
   nombre_tipo     String  @db.VarChar(50)
   descripcion     String? @db.VarChar(200)
   capacidad       Int
   cantidad_camas  Int
   estado          Boolean @default(true)
+>>>>>>> equipo/develop
 
   habitaciones     Habitacion[]
   tarifas          Tarifa[]
@@ -173,6 +243,21 @@ model TipoHabitacion {
 }
 
 model Habitacion {
+<<<<<<< HEAD
+  id_habitacion     Int      @id @default(autoincrement())
+  numero_habitacion String   @unique @db.VarChar(10)
+  piso              Int
+  id_tipo           Int
+  id_est_habitacion Int
+  descripcion       String?  @db.VarChar(200)
+  fecha_ingreso     DateTime @default(now()) @db.Date
+
+  tipo             TipoHabitacion        @relation(fields: [id_tipo], references: [id_thabitacion])
+  estado_actual    EstadoHabitacion      @relation(fields: [id_est_habitacion], references: [id_est_habitacion])
+  detalle_reservas DetalleReserva[]
+  historial        HistorialHabitacion[]
+  mantenimientos   Mantenimiento[]
+=======
   id_habitacion      Int      @id @default(autoincrement())
   numero_habitacion  String   @unique @db.VarChar(10)
   piso               Int
@@ -186,11 +271,22 @@ model Habitacion {
   detalle_reservas DetalleReserva[]
   historial       HistorialHabitacion[]
   mantenimientos  Mantenimiento[]
+>>>>>>> equipo/develop
 
   @@map("habitacion")
 }
 
 model Tarifa {
+<<<<<<< HEAD
+  id_tarifa        Int      @id @default(autoincrement())
+  id_thabitacion   Int
+  nombre_temporada String   @db.VarChar(50)
+  descripcion      String?  @db.VarChar(250)
+  fecha_inicio     DateTime @db.Date
+  fecha_fin        DateTime @db.Date
+  precio_noche     Decimal  @db.Decimal(10, 2)
+  estado           Boolean  @default(true)
+=======
   id_tarifa         Int      @id @default(autoincrement())
   id_thabitacion    Int
   nombre_temporada  String   @db.VarChar(50)
@@ -199,6 +295,7 @@ model Tarifa {
   fecha_fin         DateTime @db.Date
   precio_noche      Decimal  @db.Decimal(10, 2)
   estado            Boolean  @default(true)
+>>>>>>> equipo/develop
 
   tipo_habitacion TipoHabitacion @relation(fields: [id_thabitacion], references: [id_thabitacion])
 
@@ -206,6 +303,15 @@ model Tarifa {
 }
 
 model HistorialHabitacion {
+<<<<<<< HEAD
+  id_historial      Int       @id @default(autoincrement())
+  id_habitacion     Int
+  id_est_habitacion Int
+  fecha_inicio      DateTime  @default(now())
+  fecha_fin         DateTime?
+  observaciones     String?   @db.VarChar(300)
+  id_empleado       Int
+=======
   id_historial       Int       @id @default(autoincrement())
   id_habitacion      Int
   id_est_habitacion  Int
@@ -213,6 +319,7 @@ model HistorialHabitacion {
   fecha_fin          DateTime?
   observaciones      String?   @db.VarChar(300)
   id_empleado        Int
+>>>>>>> equipo/develop
 
   habitacion Habitacion       @relation(fields: [id_habitacion], references: [id_habitacion])
   estado     EstadoHabitacion @relation(fields: [id_est_habitacion], references: [id_est_habitacion])
@@ -222,6 +329,17 @@ model HistorialHabitacion {
 }
 
 model Mantenimiento {
+<<<<<<< HEAD
+  id_mantenimiento   Int       @id @default(autoincrement())
+  id_habitacion      Int
+  id_empleado        Int
+  tipo_mantenimiento String    @db.VarChar(30)
+  fecha_inicio       DateTime  @default(now())
+  fecha_fin          DateTime?
+  descripcion        String    @db.VarChar(300)
+  costo              Decimal?  @db.Decimal(10, 2)
+  estado             String    @db.VarChar(50)
+=======
   id_mantenimiento    Int       @id @default(autoincrement())
   id_habitacion       Int
   id_empleado         Int
@@ -231,6 +349,7 @@ model Mantenimiento {
   descripcion         String    @db.VarChar(300)
   costo               Decimal?  @db.Decimal(10, 2)
   estado              String    @db.VarChar(50) // Pendiente / Completado
+>>>>>>> equipo/develop
 
   habitacion Habitacion @relation(fields: [id_habitacion], references: [id_habitacion])
   empleado   Empleado   @relation(fields: [id_empleado], references: [id_empleado])
@@ -238,6 +357,14 @@ model Mantenimiento {
   @@map("mantenimiento")
 }
 
+<<<<<<< HEAD
+// ---------------- MÓDULO V - RESERVAS ----------------
+
+model EstadoReserva {
+  id_est_reserva Int     @id @default(autoincrement())
+  nombre_est_res String  @db.VarChar(30)
+  descripcion    String? @db.VarChar(200)
+=======
 // ------------------------------------------------------------
 // MÓDULO V - RESERVAS
 // ------------------------------------------------------------
@@ -246,6 +373,7 @@ model EstadoReserva {
   id_est_reserva  Int     @id @default(autoincrement())
   nombre_est_res  String  @db.VarChar(30) // Pendiente, Confirmada, Cancelada, Finalizada
   descripcion     String? @db.VarChar(200)
+>>>>>>> equipo/develop
 
   reservas Reserva[]
 
@@ -253,6 +381,17 @@ model EstadoReserva {
 }
 
 model Reserva {
+<<<<<<< HEAD
+  id_reserva        Int      @id @default(autoincrement())
+  fecha_reserva     DateTime @default(now())
+  fecha_entrada     DateTime @db.Date
+  fecha_salida      DateTime @db.Date
+  cantidad_personas Int
+  observaciones     String?  @db.VarChar(300)
+  id_huesped        String   @db.Uuid
+  id_empleado       Int
+  id_est_reserva    Int
+=======
   id_reserva         Int      @id @default(autoincrement())
   fecha_reserva      DateTime @default(now())
   fecha_entrada      DateTime @db.Date
@@ -262,6 +401,7 @@ model Reserva {
   id_huesped         String @db.Uuid
   id_empleado        Int
   id_est_reserva     Int
+>>>>>>> equipo/develop
 
   huesped        Huesped        @relation(fields: [id_huesped], references: [id_huesped])
   empleado       Empleado       @relation(fields: [id_empleado], references: [id_empleado])
@@ -287,10 +427,17 @@ model DetalleReserva {
 }
 
 model CheckIn {
+<<<<<<< HEAD
+  id_checkin         Int      @id @default(autoincrement())
+  fecha_hora_checkin DateTime @default(now())
+  id_reserva         Int
+  id_empleado        Int
+=======
   id_checkin          Int      @id @default(autoincrement())
   fecha_hora_checkin  DateTime @default(now())
   id_reserva          Int
   id_empleado         Int
+>>>>>>> equipo/develop
 
   reserva  Reserva  @relation(fields: [id_reserva], references: [id_reserva])
   empleado Empleado @relation(fields: [id_empleado], references: [id_empleado])
@@ -299,10 +446,17 @@ model CheckIn {
 }
 
 model CheckOut {
+<<<<<<< HEAD
+  id_checkout         Int      @id @default(autoincrement())
+  fecha_hora_checkout DateTime @default(now())
+  id_reserva          Int
+  id_empleado         Int
+=======
   id_checkout          Int      @id @default(autoincrement())
   fecha_hora_checkout  DateTime @default(now())
   id_reserva           Int
   id_empleado          Int
+>>>>>>> equipo/develop
 
   reserva  Reserva  @relation(fields: [id_reserva], references: [id_reserva])
   empleado Empleado @relation(fields: [id_empleado], references: [id_empleado])
@@ -310,6 +464,14 @@ model CheckOut {
   @@map("check_out")
 }
 
+<<<<<<< HEAD
+// ---------------- MÓDULO VI - PAGOS Y FACTURACIÓN ----------------
+
+model MetodoPago {
+  id_met_pago   Int     @id @default(autoincrement())
+  nombre_metodo String  @db.VarChar(50)
+  descripcion   String? @db.VarChar(200)
+=======
 // ------------------------------------------------------------
 // MÓDULO VI - PAGOS Y FACTURACIÓN
 // ------------------------------------------------------------
@@ -318,6 +480,7 @@ model MetodoPago {
   id_met_pago     Int     @id @default(autoincrement())
   nombre_metodo   String  @db.VarChar(50) // Efectivo, Tarjeta Débito, Tarjeta Crédito, Transferencia
   descripcion     String? @db.VarChar(200)
+>>>>>>> equipo/develop
 
   pagos Pago[]
 
@@ -325,12 +488,21 @@ model MetodoPago {
 }
 
 model Pago {
+<<<<<<< HEAD
+  id_pago     Int      @id @default(autoincrement())
+  fecha_pago  DateTime @default(now())
+  monto       Decimal  @db.Decimal(10, 2)
+  id_met_pago Int
+  id_reserva  Int
+  estado      String   @db.VarChar(50)
+=======
   id_pago      Int      @id @default(autoincrement())
   fecha_pago   DateTime @default(now())
   monto        Decimal  @db.Decimal(10, 2)
   id_met_pago  Int
   id_reserva   Int
   estado       String   @db.VarChar(50) // Pendiente, Completado, Anulado
+>>>>>>> equipo/develop
 
   metodo_pago MetodoPago @relation(fields: [id_met_pago], references: [id_met_pago])
   reserva     Reserva    @relation(fields: [id_reserva], references: [id_reserva])
@@ -340,6 +512,24 @@ model Pago {
 }
 
 model Factura {
+<<<<<<< HEAD
+  id_factura     Int      @id @default(autoincrement())
+  numero_factura String   @unique @db.VarChar(30)
+  tipo_factura   String   @db.VarChar(30)
+  rcf            String?  @db.VarChar(20)
+  fecha_emision  DateTime @default(now()) @db.Date
+  id_reserva     Int
+  id_pago        Int
+  id_empleado    Int
+  subtotal       Decimal  @db.Decimal(10, 2)
+  itbis          Decimal  @db.Decimal(10, 2)
+  total          Decimal  @db.Decimal(10, 2)
+  estado         String   @db.VarChar(50)
+
+  reserva  Reserva          @relation(fields: [id_reserva], references: [id_reserva])
+  pago     Pago             @relation(fields: [id_pago], references: [id_pago])
+  empleado Empleado         @relation(fields: [id_empleado], references: [id_empleado])
+=======
   id_factura      Int      @id @default(autoincrement())
   numero_factura  String   @unique @db.VarChar(30)
   tipo_factura    String   @db.VarChar(30) // Fiscal, Consumidor Final, etc.
@@ -356,21 +546,35 @@ model Factura {
   reserva  Reserva  @relation(fields: [id_reserva], references: [id_reserva])
   pago     Pago     @relation(fields: [id_pago], references: [id_pago])
   empleado Empleado @relation(fields: [id_empleado], references: [id_empleado])
+>>>>>>> equipo/develop
   detalles DetalleFactura[]
 
   @@map("factura")
 }
 
 model DetalleFactura {
+<<<<<<< HEAD
+  id_detalle_factura    Int     @id @default(autoincrement())
+  id_factura            Int
+  id_thabitacion        Int
+  cantidad_habitaciones Int
+  cantidad_noches       Int
+  precio_noche          Decimal @db.Decimal(10, 2)
+=======
   id_detalle_factura     Int     @id @default(autoincrement())
   id_factura             Int
   id_thabitacion         Int
   cantidad_habitaciones  Int
   cantidad_noches        Int
   precio_noche           Decimal @db.Decimal(10, 2)
+>>>>>>> equipo/develop
 
   factura         Factura        @relation(fields: [id_factura], references: [id_factura])
   tipo_habitacion TipoHabitacion @relation(fields: [id_thabitacion], references: [id_thabitacion])
 
   @@map("detalle_factura")
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> equipo/develop

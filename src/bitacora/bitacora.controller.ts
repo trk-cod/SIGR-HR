@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+import { Controller } from '@nestjs/common';
+
+@Controller('bitacora')
+export class BitacoraController {}
+=======
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { BitacoraService } from './bitacora.service.js';
@@ -16,3 +22,4 @@ export class BitacoraController {
     return this.bitacoraService.listarBitacora(query);
   }
 }
+>>>>>>> equipo/develop

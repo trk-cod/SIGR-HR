@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+import { Test, TestingModule } from '@nestjs/testing';
+import { AuthService } from './auth.service.js';
+=======
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { UnauthorizedException } from '@nestjs/common';
@@ -9,10 +13,16 @@ import bcrypt from 'bcrypt';
 import { AuthService } from './auth.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { BitacoraService } from '../bitacora/bitacora.service.js';
+>>>>>>> equipo/develop
 
 describe('AuthService', () => {
   let service: AuthService;
 
+<<<<<<< HEAD
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [AuthService],
+=======
   const contrasena = 'Admin12345*';
   let usuarioMock: any;
 
@@ -70,6 +80,7 @@ describe('AuthService', () => {
         { provide: BitacoraService, useValue: bitacoraMock },
         { provide: ConfigService, useValue: configMock },
       ],
+>>>>>>> equipo/develop
     }).compile();
 
     service = module.get<AuthService>(AuthService);
@@ -78,6 +89,8 @@ describe('AuthService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+<<<<<<< HEAD
+=======
 
   it('inicia sesión correctamente y devuelve un JWT', async () => {
     const resultado = await service.login(
@@ -183,4 +196,5 @@ describe('AuthService', () => {
     expect(resultado.usuario).not.toHaveProperty('password');
     expect(resultado.usuario).not.toHaveProperty('hash');
   });
+>>>>>>> equipo/develop
 });

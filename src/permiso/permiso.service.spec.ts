@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+import { Test, TestingModule } from '@nestjs/testing';
+import { PermisoService } from './permiso.service.js';
+=======
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { PermisoService } from './permiso.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
@@ -6,10 +10,25 @@ import { handlePrismaError } from '../common/prisma-error.js';
 vi.mock('../common/prisma-error.js', () => ({
   handlePrismaError: vi.fn(),
 }));
+>>>>>>> equipo/develop
 
 describe('PermisoService', () => {
   let service: PermisoService;
 
+<<<<<<< HEAD
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [PermisoService],
+    }).compile();
+
+    service = module.get<PermisoService>(PermisoService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+=======
   const prismaMock = {
     permiso: {
       findMany: vi.fn(),
@@ -68,3 +87,4 @@ describe('PermisoService', () => {
     });
   });
 });
+>>>>>>> equipo/develop
