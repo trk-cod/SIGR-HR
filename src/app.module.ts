@@ -10,7 +10,8 @@ import { RolModule } from './rol/rol.module.js';
 import { UsuarioModule } from './usuario/usuario.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { BitacoraModule } from './bitacora/bitacora.module.js';
-
+import { EstadoReservaModule } from './estado-reserva/estado-reserva.module.js';
+import { MetodoPagoModule } from './metodo-pago/metodo-pago.module.js';
 
 
 @Module({
@@ -23,6 +24,8 @@ import { BitacoraModule } from './bitacora/bitacora.module.js';
     UsuarioModule,
     AuthModule,
     BitacoraModule,
+    EstadoReservaModule,
+    MetodoPagoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
