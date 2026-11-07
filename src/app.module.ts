@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { BitacoraModule } from './bitacora/bitacora.module.js';
 import { EstadoReservaModule } from './estado-reserva/estado-reserva.module.js';
 import { MetodoPagoModule } from './metodo-pago/metodo-pago.module.js';
+import { ReservaModule } from './reserva/reserva.module.js';
 
 
 @Module({
@@ -26,9 +27,9 @@ import { MetodoPagoModule } from './metodo-pago/metodo-pago.module.js';
     BitacoraModule,
     EstadoReservaModule,
     MetodoPagoModule,
+    ReservaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
